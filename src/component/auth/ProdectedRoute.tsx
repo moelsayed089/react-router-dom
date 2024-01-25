@@ -5,11 +5,12 @@ interface IProps {
 children:ReactNode;
 redirctPath:string;
 isAllowed:boolean;
+data?:unknown; 
 }
 
 
-export const ProdectedRoute = ({children,redirctPath,isAllowed} : IProps) => {
-    if(isAllowed) return <Navigate to={redirctPath}/>
+export const ProdectedRoute = ({children,redirctPath,isAllowed ,data} : IProps) => {
+    if(isAllowed) return <Navigate to={redirctPath} replace state={data}/>
     
     
     return children

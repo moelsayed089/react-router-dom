@@ -12,27 +12,37 @@ import { Tutorial } from "../pages/learn/Tutorial";
 import { ContributePage } from "../pages/ContributePage";
 import { LoginPage } from "../pages/Login";
 import { ProdectedRoute } from "../component/auth/ProdectedRoute";
+import { ErorrProdectHandel } from "../component/erorr/ErorrProdectHandel";
+import { NotFoundPage } from "../pages/NotFound";
 
 
 
-const isLoggedIn = true
+const isLoggedIn = false;
+const userData: { email: string } | null = isLoggedIn ? null : { email: "email@gmail.com" };
 
 const router = createBrowserRouter(
     createRoutesFromElements(<>
-    <Route path="/" element={<RootLayout/>}>
+    <Route  path="/" element={<RootLayout/>}     > 
         <Route index element={<HomePage/>}/>
         <Route path="contact" element={<ContactPage/>}/>
         <Route path="about" element={<AboutPage/>}/>
 
-        <Route path="contribute" element={
-            <ProdectedRoute isAllowed={isLoggedIn} redirctPath="/login" >
-                    <ContributePage />
-            </ProdectedRoute>
-        }/>
-        
-            <Route path="login" element={<ProdectedRoute isAllowed={!isLoggedIn} redirctPath="/contribute" >
-                <LoginPage />
-            </ProdectedRoute>}/>
+            <Route
+                path="contribute"
+                element={
+                    <ProdectedRoute isAllowed={isLoggedIn} redirctPath="/login" data={userData}>
+                        <ContributePage />
+                    </ProdectedRoute>
+                } errorElement={<ErorrProdectHandel/>}
+            />
+            <Route 
+                path="login"
+                element={
+                    <ProdectedRoute isAllowed={!isLoggedIn} redirctPath="/contribute" data={userData}>
+                        <LoginPage />
+                    </ProdectedRoute>
+                } 
+            />
     </Route>
 
 
@@ -41,6 +51,9 @@ const router = createBrowserRouter(
             <Route path="thinking_in_react" element={<ThinkinginReact/> } />
             <Route path="tutorial" element={<Tutorial/>} />
         </Route>
+
+
+        <Route path="*" element={<NotFoundPage/>}/>
 </>
     )
 );
