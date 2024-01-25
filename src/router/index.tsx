@@ -11,10 +11,11 @@ import { ThinkinginReact } from "../pages/learn/Thinking in React";
 import { Tutorial } from "../pages/learn/Tutorial";
 import { ContributePage } from "../pages/ContributePage";
 import { LoginPage } from "../pages/Login";
+import { ProdectedRoute } from "../component/auth/ProdectedRoute";
 
 
 
-
+const isLoggedIn = true
 
 const router = createBrowserRouter(
     createRoutesFromElements(<>
@@ -22,8 +23,16 @@ const router = createBrowserRouter(
         <Route index element={<HomePage/>}/>
         <Route path="contact" element={<ContactPage/>}/>
         <Route path="about" element={<AboutPage/>}/>
-            <Route path="contribute" element={<ContributePage/>}/>
-        <Route path="login" element={<LoginPage/>}/>
+
+        <Route path="contribute" element={
+            <ProdectedRoute isAllowed={isLoggedIn} redirctPath="/login" >
+                    <ContributePage />
+            </ProdectedRoute>
+        }/>
+        
+            <Route path="login" element={<ProdectedRoute isAllowed={!isLoggedIn} redirctPath="/contribute" >
+                <LoginPage />
+            </ProdectedRoute>}/>
     </Route>
 
 
